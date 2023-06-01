@@ -179,11 +179,13 @@ public class UpdateDelete_Magazine extends AppCompatActivity {
                             public void onClick(DialogInterface dialog, int which) {
                                 firebaseDatabase.getInstance().getReference("MagazineDetails")
                                         .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(title).removeValue();
+
                                 AlertDialog.Builder builder = new AlertDialog.Builder(UpdateDelete_Magazine.this);
-                                builder.setMessage("Your Magazine Has Been Deleted!");
+                                builder.setMessage("Your magazine has been deleted successfully");
                                 builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
+
                                         startActivity(new Intent(UpdateDelete_Magazine.this, PublisherMagPanel_BottomNavigation.class));
                                     }
                                 });
