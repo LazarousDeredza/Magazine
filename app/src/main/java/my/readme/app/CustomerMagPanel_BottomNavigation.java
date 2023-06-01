@@ -1,30 +1,28 @@
 package my.readme.app;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
 import com.example.namespace.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
-import my.readme.app.customerMagPanel.CustomerCartFragment;
+
 import my.readme.app.customerMagPanel.CustomerHomeFragment;
-import my.readme.app.customerMagPanel.CustomerOrdersFragment;
-import my.readme.app.customerMagPanel.CustomerProfileFragment;
+
 import my.readme.app.customerMagPanel.CustomerTrackFragment;
 import my.readme.app.customerMagPanel.Customer_Cart_Frag;
 import my.readme.app.customerMagPanel.Customer_Order_Frag;
 import my.readme.app.customerMagPanel.Customer_Profile_Frag;
-import my.readme.app.publisherMagPanel.UpdateDelete_Magazine;
 
 public class CustomerMagPanel_BottomNavigation extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
@@ -42,25 +40,25 @@ public class CustomerMagPanel_BottomNavigation extends AppCompatActivity impleme
             if (name.equalsIgnoreCase("Homepage")) {
                 loadfragment(new CustomerHomeFragment());
             } else if (name.equalsIgnoreCase("Preparingpage")) {
-                loadfragment(new CustomerCartFragment());
+                loadfragment(new Customer_Cart_Frag());
             } else if (name.equalsIgnoreCase("DeliveryOrderpage")) {
-                loadfragment(new CustomerOrdersFragment());
+                loadfragment(new Customer_Order_Frag());
             } else if (name.equalsIgnoreCase("Thankyou")) {
                 loadfragment(new CustomerTrackFragment());
             }
         } else {
-            loadfragment(new CustomerProfileFragment());
+            loadfragment(new Customer_Profile_Frag());
         }
     }
 
-    private void loadfragment(CustomerProfileFragment customerProfileFragment) {
+    private void loadfragment(Customer_Profile_Frag customerProfileFragment) {
     }
 
-    private void loadfragment(CustomerOrdersFragment customerOrdersFragment) {
+    private void loadfragment(Customer_Order_Frag customerOrdersFragment) {
 
     }
 
-    private void loadfragment(CustomerCartFragment customerCartFragment) {
+    private void loadfragment(Customer_Cart_Frag customerCartFragment) {
 
     }
 

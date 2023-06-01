@@ -62,7 +62,6 @@ public class Customer_Profile_Frag extends Fragment {
         Lname = (TextInputLayout)v.findViewById(R.id.Lname);
         Email = (TextInputLayout)v.findViewById(R.id.Emailid);
         Pass = (TextInputLayout)v.findViewById(R.id.Password);
-        cpass = (TextInputLayout)v.findViewById(R.id.confirmpass);
         mobileno = (TextInputLayout)v.findViewById(R.id.Mobilenumber);
         localaddress = (TextInputLayout)v.findViewById(R.id.Localaddress);
         pincode = (TextInputLayout)v.findViewById(R.id.Pincodee);
@@ -113,7 +112,7 @@ public class Customer_Profile_Frag extends Fragment {
                 String Lnamee = snapshot.child("Last Name").getValue().toString();
                 String Emailid = snapshot.child("EmailId").getValue().toString();
                 String Password = snapshot.child("Password").getValue().toString();
-                String Confpassword = snapshot.child("Confirm Password").getValue().toString();
+
                 String Mobilenumber = snapshot.child("Mobile No").getValue().toString();
                 String Localaddresss = snapshot.child("Local Address").getValue().toString();
                 String Areaa = snapshot.child("Area").getValue().toString();
@@ -125,7 +124,7 @@ public class Customer_Profile_Frag extends Fragment {
                 Lname.getEditText().setText(Lnamee);
                 Email.getEditText().setText(Emailid);
                 Pass.getEditText().setText(Password);
-                cpass.getEditText().setText(Confpassword);
+
                 mobileno.getEditText().setText(Mobilenumber);
                 localaddress.getEditText().setText(Localaddresss);
                 area.getEditText().setText(Areaa);
