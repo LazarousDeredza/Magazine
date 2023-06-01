@@ -8,10 +8,9 @@
     android:background="@drawable/img3">
 
     <ScrollView
-        android:layout_width="280dp"
-        android:layout_height="430dp"
-        android:layout_marginStart="60dp"
-        android:layout_marginEnd="60dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+       android:layout_margin="20dp"
         android:background="@drawable/background_shape"
         android:orientation="vertical"
         android:padding="15dp"
@@ -126,8 +125,8 @@
                 android:id="@+id/Localaddress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:errorEnabled="true"
-                android:layout_marginTop="11dp">
+                android:layout_marginTop="11dp"
+                app:errorEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"

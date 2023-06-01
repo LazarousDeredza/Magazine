@@ -6,6 +6,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -19,6 +21,10 @@ import my.readme.app.customerMagPanel.CustomerHomeFragment;
 import my.readme.app.customerMagPanel.CustomerOrdersFragment;
 import my.readme.app.customerMagPanel.CustomerProfileFragment;
 import my.readme.app.customerMagPanel.CustomerTrackFragment;
+import my.readme.app.customerMagPanel.Customer_Cart_Frag;
+import my.readme.app.customerMagPanel.Customer_Order_Frag;
+import my.readme.app.customerMagPanel.Customer_Profile_Frag;
+import my.readme.app.publisherMagPanel.UpdateDelete_Magazine;
 
 public class CustomerMagPanel_BottomNavigation extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
@@ -75,22 +81,44 @@ public class CustomerMagPanel_BottomNavigation extends AppCompatActivity impleme
                 break;
 
             case R.id.cust_profile:
-                fragment = new Fragment(R.layout.fragment_customerprofile);
+                fragment = new Customer_Profile_Frag();
                 break;
             case R.id.Cust_order:
-                fragment = new Fragment(R.layout.fragment_customerorders);
+                fragment = new Customer_Order_Frag();
                 break;
             case R.id.cart:
-                fragment = new Fragment(R.layout.fragment_customercart);
+                fragment = new Customer_Cart_Frag();
                 break;
 
             case R.id.logout:
 
-                FirebaseAuth.getInstance().signOut();
-                Intent intent = new Intent(this, MainMenu.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent);
-                finish();
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(CustomerMagPanel_BottomNavigation.this);
+                builder.setMessage("Are you sure you want to Logout");
+                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        FirebaseAuth.getInstance().signOut();
+                        Intent intent = new Intent(getApplicationContext(), MainMenu.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);
+                        finish();
+                    }
+                });
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+                AlertDialog alert = builder.create();
+                alert.show();
+
+
+
+
+
+
                 break;
                 /*
 

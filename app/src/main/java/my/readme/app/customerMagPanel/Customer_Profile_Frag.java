@@ -1,6 +1,5 @@
 package my.readme.app.customerMagPanel;
 
-import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,13 +11,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.namespace.R;
-import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -28,9 +30,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.hbb20.CountryCodePicker;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import my.readme.app.MainMenu;
 
-public class CustomerProfileFragment extends Fragment {
+public class Customer_Profile_Frag extends Fragment {
 
     String[] Lefke = {"Gemikonagi", "Yedidalga", "Yesilyurt"};
     String[] Lefkosa = {"Gonyeli", "Hamitkoy", "Haspolat"};
@@ -49,9 +54,7 @@ public class CustomerProfileFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_customerprofile, null);
-        getActivity().setTitle("Profile");
-
-        setHasOptionsMenu(true);
+        getActivity().setTitle("Welcome to ReadMe");
 
 
 
@@ -105,17 +108,18 @@ public class CustomerProfileFragment extends Fragment {
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+
                 String Fnamee = snapshot.child("First Name").getValue().toString();
                 String Lnamee = snapshot.child("Last Name").getValue().toString();
-                String Emailid = snapshot.child("Email").getValue().toString();
+                String Emailid = snapshot.child("EmailId").getValue().toString();
                 String Password = snapshot.child("Password").getValue().toString();
                 String Confpassword = snapshot.child("Confirm Password").getValue().toString();
-                String Mobilenumber = snapshot.child("Mobile Number").getValue().toString();
+                String Mobilenumber = snapshot.child("Mobile No").getValue().toString();
                 String Localaddresss = snapshot.child("Local Address").getValue().toString();
                 String Areaa = snapshot.child("Area").getValue().toString();
                 String Pincodee = snapshot.child("Pincode").getValue().toString();
                 String Cityy = snapshot.child("City").getValue().toString();
-                String Townn = snapshot.child("Town").getValue().toString();
+              //  String Townn = snapshot.child("Town").getValue().toString();
 
                 Fname.getEditText().setText(Fnamee);
                 Lname.getEditText().setText(Lnamee);
@@ -126,7 +130,7 @@ public class CustomerProfileFragment extends Fragment {
                 localaddress.getEditText().setText(Localaddresss);
                 area.getEditText().setText(Areaa);
                 pincode.getEditText().setText(Pincodee);
-                Townspin.setPrompt(Townn);
+               // Townspin.setPrompt(Townn);
                 Cityspin.setPrompt(Cityy);
 
 
@@ -139,7 +143,7 @@ public class CustomerProfileFragment extends Fragment {
                 Log.e("Area",Areaa);
                 Log.e("Pincode",Pincodee);
                 Log.e("City",Cityy);
-                Log.e("Town",Townn);
+               // Log.e("Town",Townn);
 
                 pd.dismiss();
 
@@ -151,21 +155,77 @@ public class CustomerProfileFragment extends Fragment {
             }
         });
 
-
         return v;
     }
 
 
+ /*   private void loadData() {
+
+        swipeRefreshLayout.setRefreshing(true);
+
+
+        databaseReference = FirebaseDatabase.getInstance().getReference("MagazineDetails");
+
+        databaseReference.addValueEventListener(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                updateMagazineModelList.clear();
+                for (DataSnapshot snapshot1 : snapshot.getChildren()) {
+                    for (DataSnapshot snapshot2 : snapshot1.getChildren()) {
+                        UpdateMagazineModel updateMagazineModel = snapshot2.getValue(UpdateMagazineModel.class);
+
+                        Log.e("Magazines title", updateMagazineModel.getTitle());
+                        Log.e("Magazines description", updateMagazineModel.getDescription());
+
+                        updateMagazineModel.setPublisherId(snapshot2.child("publisherid").getValue().toString());
+
+
+                        updateMagazineModelList.add(updateMagazineModel);
+
+                    }
+                }
+
+                Log.e("Magazines retrieved", String.valueOf(updateMagazineModelList.size()));
+
+
+                adapter.notifyDataSetChanged();
+
+
+                if (updateMagazineModelList.size() == 0) {
+                    loadingMagazine.setVisibility(View.GONE);
+                    noMagazineFound.setVisibility(View.VISIBLE);
+                } else {
+                    recyclerView.setVisibility(View.VISIBLE);
+                    loadingMagazine.setVisibility(View.GONE);
+                    noMagazineFound.setVisibility(View.GONE);
+                }
+
+
+                swipeRefreshLayout.setRefreshing(false);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                swipeRefreshLayout.setRefreshing(false);
+
+            }
+        });
+
+
+    }*/
+
+
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        inflater.inflate(R.menu.logout,menu);
+        inflater.inflate(R.menu.logout, menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
         int idd = item.getItemId();
-        if(idd == R.id.LOGOUT){
+        if (idd == R.id.LOGOUT) {
             Logout();
             return true;
         }
@@ -176,7 +236,7 @@ public class CustomerProfileFragment extends Fragment {
 
         FirebaseAuth.getInstance().signOut();
         Intent intent = new Intent(getActivity(), MainMenu.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }
 }
