@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "683528405687",
+    "firebase_url": "https://readme-4e3df-default-rtdb.firebaseio.com",
+    "project_id": "readme-4e3df",
+    "storage_bucket": "readme-4e3df.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:683528405687:android:76c3ec83cfdf07720e4332",
+        "android_client_info": {
+          "package_name": "my.readme.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "683528405687-9a1uecbjram0nv09eq22kngtp9vsje1b.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "my.readme.app",
+            "certificate_hash": "8f5d2a5cc0c860f0a45cd8340f2c79b62e9c68f1"
+          }
+        },
+        {
+          "client_id": "683528405687-p6koslrd7t8vncpaps5dqf5h98d8bgi5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCqhkZZK7sutZFv5hk3eI2ovB-6wp8yn6M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "683528405687-p6koslrd7t8vncpaps5dqf5h98d8bgi5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

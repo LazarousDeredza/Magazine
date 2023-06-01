@@ -1,0 +1,60 @@
+<resources>
+    <string name="app_name">ReadMe</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="logout">Logout</string>
+
+    <string-array name="City">
+        <item>Lefke</item>
+        <item>Lefkosa</item>
+    </string-array>
+
+    <string-array name="shipper">
+        <item>Shipper 1</item>
+        <item>Shipper 2</item>
+    </string-array>
+
+    <string-array name="Titles">
+        <item>ldeal home</item>
+        <item>Golf Monthly</item>
+        <item>Classic Rock</item>
+        <item>Country Life</item>
+        <item>Digital Camera</item>
+        <item>FourFourTwo</item>
+        <item>People</item>
+        <item>Total Film</item>
+        <item>How It Works</item>
+        <item>Rugby World</item>
+        <item>Homes and Gardens</item>
+        <item>The Field</item>
+        <item>Yachting World</item>
+        <item>Style at Home</item>
+        <item>Women Weekly</item>
+        <item>Style at Home</item>
+        <item>Women and Home</item>
+        <item>Us Weekly</item>
+        <item>Macworld</item>
+        <item>PCWorld</item>
+        <item>Architectural Digest</item>
+        <item>Maximum PC</item>
+        <item>Vogue</item>
+        <item>MotorTrend</item>
+        <item>MacLife</item>
+        <item>Victoria</item>
+        <item>Real Simple</item>
+        <item>Mens Health</item>
+        <item>Elle Decor</item>
+        <item>Veranda</item>
+        <item>MILIEU</item>
+        <item>House Beautiful</item>
+        <item>Sound and Vision</item>
+        <item>Star Magazine</item>
+        <item>The Economist</item>
+        <item>All recipes</item>
+        <item>ELLE</item>
+        <item>Recoil</item>
+        <item>Maxim</item>
+        <item>Food and Wine</item>
+    </string-array>
+</resources>

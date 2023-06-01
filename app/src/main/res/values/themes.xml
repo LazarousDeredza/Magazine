@@ -1,0 +1,16 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Base.Theme.AppCompat.Light.DarkActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/yourSelectedColor</item>
+        <item name="colorPrimaryDark">@color/Black</item>
+        <item name="colorAccent">@color/darkgray</item>
+
+    </style>
+
+    <style name="AppThemeNoActionbar" parent="AppTheme">
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+    </style>
+
+</resources>

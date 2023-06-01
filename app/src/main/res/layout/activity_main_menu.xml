@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/imageview3"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:textAlignment="center"
+    android:theme="@style/AppTheme"
+    android:visibility="visible"
+    tools:context="my.readme.app.MainMenu"
+    tools:visibility="visible">
+
+    <ImageView
+        android:id="@+id/back2"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:scaleType="fitXY"
+        android:contentDescription="@string/app_name"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/cover" />
+
+    <LinearLayout
+        android:id="@+id/linearlayout"
+        android:layout_width="275dp"
+        android:layout_height="390dp"
+        android:background="@drawable/background_shape"
+        android:orientation="vertical"
+        android:padding="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.498">
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="157dp"
+            android:layout_height="65dp"
+            android:layout_gravity="center"
+            app:srcCompat="@drawable/wordart" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:fontFamily="cursive"
+            android:padding="20dp"
+            android:scrollbarSize="4dp"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:text="Indulge Yourself With The Latest Gist!!"
+            android:textColor="#070707"
+            android:textSize="15sp" />
+
+        <Button
+            android:id="@+id/SignwithEmail"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:background="@drawable/btnred"
+            android:drawableLeft="@drawable/whitemail"
+            android:gravity="center"
+            android:paddingLeft="10dp"
+            android:text="SignIn with Email"
+            android:textColor="#040303" />
+
+        <Button
+            android:id="@+id/SignWithPhone"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/btnblueish"
+            android:drawableLeft="@drawable/phonewhite"
+            android:gravity="center"
+            android:paddingLeft="10dp"
+            android:text="SignIn With Phone"
+            android:textColor="#040303" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="clip_horizontal|center"
+            android:layout_marginTop="7dp"
+            android:orientation="horizontal">
+
+            <TableRow
+                android:id="@+id/hr"
+                android:layout_width="90dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="12dp"
+                android:background="#535252">
+
+            </TableRow>
+
+            <TextView
+                android:id="@+id/OR"
+                android:layout_width="44dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="0dp"
+                android:gravity="center"
+                android:text="OR"
+                android:textAlignment="center"
+                android:textColor="#090909"
+                android:textSize="17sp" />
+
+            <TableRow
+                android:id="@+id/dr"
+                android:layout_width="90dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="12dp"
+                android:background="#474646" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/Signup"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="7dp"
+            android:background="@drawable/button_shape"
+            android:paddingLeft="10dp"
+            android:text="Signup"
+            android:textColor="#040303" />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="my.readme.app.publisherMagPanel.UpdateDelete_Magazine"
+    android:background="@drawable/img14">
+
+    <ImageButton
+        android:layout_width="180dp"
+        android:layout_height="180dp"
+        android:id="@+id/image_upload"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/camerashapebtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintHorizontal_bias="0.50"
+        android:src="@drawable/ic_camera_24"
+        app:layout_constraintBottom_toTopOf="@+id/linear_layout"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/linear_layout"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_marginTop="15dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/image_upload"
+        >
+
+
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/title"
+            android:background="#E1D6D6"
+            android:textColorHint="@color/Black"
+
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:padding="10dp"
+                android:layout_height="wrap_content"
+                android:hint="Enter Magazine Title"
+                android:inputType="text"
+                android:singleLine="true"
+                android:textColor="@color/Black"
+                android:textSize="18sp"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/description"
+            android:textColorHint="@color/Black"
+            android:background="#E1D6D6"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:hint="Description"
+                android:inputType="text"
+                android:textColor="@color/Black"
+                android:textSize="18sp"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/Quantity"
+            android:textColorHint="@color/Black"
+            android:background="#E1D6D6"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Quantity"
+                android:padding="10dp"
+                android:inputType="number"
+                android:textColor="@color/Black"
+                android:textSize="18sp"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/price"
+            android:textColorHint="@color/Black"
+            android:background="#E1D6D6"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Price"
+                android:padding="10dp"
+                android:inputType="number"
+                android:textColor="@color/Black"
+                android:textSize="18sp"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/linear_layout"
+        app:layout_constraintVertical_bias="0.33"
+        app:layout_constraintHorizontal_bias="1.0">
+
+        <Button
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:id="@+id/Updatemagazine"
+            android:layout_gravity="center"
+            android:background="@drawable/btnblueish"
+            android:textColor="@color/white"
+            android:text="Update"
+            android:textSize="18sp"
+            android:padding="10dp"/>
+        <Button
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:id="@+id/DeleteMagazine"
+            android:layout_gravity="center"
+            android:background="@drawable/btnred"
+            android:textColor="@color/white"
+            android:text="Delete"
+            android:textSize="18sp"
+            android:padding="10dp"
+            android:layout_marginLeft="30dp"
+            android:drawablePadding="10dp"/>
+
+
+
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

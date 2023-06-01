@@ -1,0 +1,20 @@
+pluginManagement {
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+        maven { url='https://jitpack.io'}
+    }
+
+}
+dependencyResolutionManagement {
+    repositories {
+        maven { url "https://jitpack.io" }
+        google()
+        jcenter()
+        mavenCentral()
+        }
+}
+
+rootProject.name = "ReadMe"
+include ':app'

@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-sdk
+        android:name=".ReadMe"
+        android:minSdkVersion="20"
+        android:targetSdkVersion="33"
+        tools:ignore="GradleOverrides" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.READ_SMS" />
+   <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
+
+
+
+
+
+
+
+
+    <uses-feature
+        android:name="android.hardware.telephony"
+        android:required="false" />
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="ReadMe"
+        android:largeHeap="true"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        tools:replace="android:label"
+        tools:targetApi="s">
+        <activity
+            android:name="my.readme.app.publisherMagPanel.UpdateDelete_Magazine"
+            android:exported="false" />
+        <activity
+            android:name="my.readme.app.publisherMagPanel.publisher_postMagazine"
+            android:exported="false" />
+        <activity
+            android:name="my.readme.app.Delivery_sendotp"
+            android:exported="false" />
+        <activity
+            android:name="my.readme.app.DeliveryForgotPassword"
+            android:exported="false" />
+        <activity
+            android:name="my.readme.app.DeliveryMagPanel_BottomNavigation"
+            android:exported="false" />
+        <activity
+            android:name="my.readme.app.Delivery_VerifyPhone"
+            android:exported="false" />
+        <activity
+            android:name="my.readme.app.ForgotPassword"
+            android:exported="false" />
+        <activity
+            android:name="my.readme.app.CustomerMagPanel_BottomNavigation"
+            android:exported="false" />
+        <activity
+            android:name="my.readme.app.sendotp"
+            android:exported="false" />
+        <activity
+            android:name="my.readme.app.VerifyPhone"
+            android:exported="false" />
+        <activity
+            android:name="my.readme.app.Publishersendotp"
+            android:exported="false" />
+
+        <activity
+            android:name="my.readme.app.PublisherForgotPassword"
+            android:exported="false" />
+        <activity
+            android:name="my.readme.app.PublisherMagPanel_BottomNavigation"
+            android:exported="false" />
+        <activity
+            android:name="my.readme.app.PublisherVerifyPhone"
+            android:exported="false" />
+        <activity
+            android:name="my.readme.app.Registration"
+            android:exported="false" />
+        <activity
+            android:name="my.readme.app.Delivery_Registration"
+            android:exported="false" />
+        <activity
+            android:name="my.readme.app.Delivery_Loginphone"
+            android:exported="false" />
+        <activity
+            android:name="my.readme.app.Delivery_Login"
+            android:exported="false" />
+        <activity
+            android:name="my.readme.app.Loginphone"
+            android:exported="false" />
+        <activity
+            android:name="my.readme.app.Login"
+            android:exported="false" />
+        <activity
+            android:name="my.readme.app.PublisherRegistration"
+            android:exported="false" />
+        <activity
+            android:name="my.readme.app.Publisherloginphone"
+            android:exported="false" />
+        <activity
+            android:name="my.readme.app.Publisherlogin"
+            android:exported="false" />
+        <activity
+            android:name="my.readme.app.ChooseOne"
+            android:exported="false" />
+        <activity
+            android:name="my.readme.app.MainMenu"
+            android:exported="false" />
+        <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity" />
+        <activity
+            android:name="my.readme.app.MainActivity"
+            android:exported="true"
+            android:theme="@style/AppTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>
