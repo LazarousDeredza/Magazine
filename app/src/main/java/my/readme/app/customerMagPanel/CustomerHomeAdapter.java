@@ -1,6 +1,9 @@
 package my.readme.app.customerMagPanel;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,10 +23,10 @@ import com.example.namespace.R;
 public class CustomerHomeAdapter extends RecyclerView.Adapter<CustomerHomeAdapter.ViewHolder> {
 
     private Context mcontext;
-    private List<UpdateMagazineModel>updateMagazineModelList;
+    private List<UpdateMagazineModel> updateMagazineModelList;
     DatabaseReference databaseReference;
 
-    public CustomerHomeAdapter(Context context , List<UpdateMagazineModel>updateMagazineModelList){
+    public CustomerHomeAdapter(Context context, List<UpdateMagazineModel> updateMagazineModelList) {
 
         this.updateMagazineModelList = updateMagazineModelList;
         this.mcontext = context;
@@ -33,7 +36,7 @@ public class CustomerHomeAdapter extends RecyclerView.Adapter<CustomerHomeAdapte
     @NonNull
     @Override
     public CustomerHomeAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mcontext).inflate(R.layout.customer_menumagazine,parent,false);
+        View view = LayoutInflater.from(mcontext).inflate(R.layout.customer_menumagazine, parent, false);
         return new CustomerHomeAdapter.ViewHolder(view);
     }
 
@@ -44,7 +47,19 @@ public class CustomerHomeAdapter extends RecyclerView.Adapter<CustomerHomeAdapte
         //Glide.with(mcontext).load(updateMagazineModel.getImageURL()).into(holder.imageView);
         holder.Title.setText(updateMagazineModel.getTitle());
         updateMagazineModel.getPublisherId();
-        holder.Price.setText("Price: $ "+updateMagazineModel.getPrice());
+        holder.Price.setText("Price: $ " + updateMagazineModel.getPrice());
+
+
+        String sImage = updateMagazineModel.getImageURL();
+
+        //initialise byte array from encoded string
+        byte[] bytes = Base64.decode(updateMagazineModel.getImageURL(), Base64.DEFAULT);
+
+        //Initialize bitmap
+        Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+        //Set bitmap on image view
+        holder.imageView.setImageBitmap(bitmap);
+
 
     }
 
@@ -57,10 +72,10 @@ public class CustomerHomeAdapter extends RecyclerView.Adapter<CustomerHomeAdapte
         }
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder {
 
         ImageView imageView;
-        TextView Title,Price;
+        TextView Title, Price;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

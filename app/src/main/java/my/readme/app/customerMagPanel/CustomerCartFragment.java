@@ -1,9 +1,11 @@
 package my.readme.app.customerMagPanel;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -12,7 +14,13 @@ import androidx.annotation.Nullable;
 import android.app.Fragment;
 
 import com.example.namespace.R;
+import com.google.firebase.auth.FirebaseAuth;
+
+import my.readme.app.MainMenu;
+
 public class CustomerCartFragment extends Fragment {
+
+
 
     @Nullable
     @Override
@@ -23,5 +31,29 @@ public class CustomerCartFragment extends Fragment {
     }
 
 
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.logout,menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        int idd = item.getItemId();
+        if(idd == R.id.LOGOUT){
+            Logout();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void Logout() {
+
+        FirebaseAuth.getInstance().signOut();
+        Intent intent = new Intent(getActivity(), MainMenu.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+    }
 
 }

@@ -6,11 +6,13 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.example.namespace.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 
 import my.readme.app.customerMagPanel.CustomerCartFragment;
 import my.readme.app.customerMagPanel.CustomerHomeFragment;
@@ -66,22 +68,28 @@ public class CustomerMagPanel_BottomNavigation extends AppCompatActivity impleme
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
         Fragment fragment = null;
+
         switch (item.getItemId()){
             case R.id.cust_Home:
                 fragment=new CustomerHomeFragment();
                 break;
 
-            case R.id.cart:
-                fragment= new Fragment();
-                break;
-
             case R.id.cust_profile:
-                fragment= new Fragment();
+                fragment=new Fragment(R.layout.fragment_customerprofile);
+                break;
+                case R.id.cart:
+                fragment=new Fragment(R.layout.fragment_customercart);
                 break;
 
-            /*case R.id.Cust_order:
-                fragment= new Fragment();
+            case R.id.logout:
+
+                FirebaseAuth.getInstance().signOut();
+                Intent intent = new Intent(this, MainMenu.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+                finish();
                 break;
+                /*
 
             case R.id.track:
                 fragment= new Fragment();

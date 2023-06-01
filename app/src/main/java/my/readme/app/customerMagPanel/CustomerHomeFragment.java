@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -36,30 +37,44 @@ import my.readme.app.MainMenu;
 public class CustomerHomeFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     RecyclerView recyclerView;
-    private List<UpdateMagazineModel> updateMagazineModelList=new ArrayList<>();
+    private List<UpdateMagazineModel> updateMagazineModelList = new ArrayList<>();
     private CustomerHomeAdapter adapter;
     String Town, City, Area;
     DatabaseReference dataa, databaseReference;
     SwipeRefreshLayout swipeRefreshLayout;
 
+
+    ImageView loadingMagazine, noMagazineFound;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_customerhome, null);
-        getActivity().setTitle("Home");
+        getActivity().setTitle("Welcome to ReadMe");
 
         recyclerView = v.findViewById(R.id.recycle_menu);
+
+
+        loadingMagazine = v.findViewById(R.id.loading_magazines);
+        noMagazineFound = v.findViewById(R.id.no_magazines);
+        loadingMagazine.setVisibility(View.VISIBLE);
+        noMagazineFound.setVisibility(View.GONE);
+
         recyclerView.setHasFixedSize(true);
         Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.move);
         recyclerView.startAnimation(animation);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
+        adapter = new CustomerHomeAdapter(getContext(), updateMagazineModelList);
+        recyclerView.setAdapter(adapter);
 
-        for (int i = 0; i < 10; i++) {
-            UpdateMagazineModel updateMagazineModel=new UpdateMagazineModel();
-            updateMagazineModel.setTitle("Magazine "+i);
+
+
+     /*   for (int i = 0; i < 10; i++) {
+            UpdateMagazineModel updateMagazineModel = new UpdateMagazineModel();
+            updateMagazineModel.setTitle("Magazine " + i);
             updateMagazineModel.setDescription("Fashion Meg");
-            updateMagazineModel.setPrice(i+".20");
+            updateMagazineModel.setPrice(i + ".20");
             updateMagazineModel.setQuantity("10");
             updateMagazineModel.setImageURL("......");
             updateMagazineModel.setPublisherId("uugyww4141");
@@ -68,98 +83,99 @@ public class CustomerHomeFragment extends Fragment implements SwipeRefreshLayout
         }
 
 
-
         adapter = new CustomerHomeAdapter(getContext(), updateMagazineModelList);
-        recyclerView.setAdapter(adapter);
+        recyclerView.setAdapter(adapter);*/
 
-        updateMagazineModelList = new ArrayList<>();
+
         swipeRefreshLayout = (SwipeRefreshLayout) v.findViewById(R.id.swipelayout);
         swipeRefreshLayout.setOnRefreshListener(this);
         swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimaryDark, R.color.Red);
 
-       /* swipeRefreshLayout.post(new Runnable() {
+        swipeRefreshLayout.post(new Runnable() {
             @Override
             public void run() {
-                swipeRefreshLayout.setRefreshing(true);
-                String userid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                dataa = FirebaseDatabase.getInstance().getReference("User").child(userid);
-                dataa.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                        Customer custo = snapshot.getValue(Customer.class);
-                        City = custo.getCity();
-                        Town = custo.getTown();
-                        Area = custo.getArea();
-                        customermenu();
-                    }
+                loadData();
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
             }
-        });*/
+        });
 
-
+        loadData();
         return v;
     }
 
     @Override
     public void onRefresh() {
-        customermenu();
+        loadData();
     }
 
-    private void customermenu() {
+    private void loadData() {
 
         swipeRefreshLayout.setRefreshing(true);
 
-        if (City != null && Town != null && Area != null) {
 
-            databaseReference = FirebaseDatabase.getInstance().getReference("MagazineDetails");
-            databaseReference.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    updateMagazineModelList.clear();
-                    for (DataSnapshot snapshot1 : snapshot.getChildren()) {
-                        for (DataSnapshot snapshot2 : snapshot1.getChildren()) {
-                            UpdateMagazineModel updateMagazineModel = snapshot2.getValue(UpdateMagazineModel.class);
-                            updateMagazineModelList.add(updateMagazineModel);
-                        }
+        databaseReference = FirebaseDatabase.getInstance().getReference("MagazineDetails");
+
+        databaseReference.addValueEventListener(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                updateMagazineModelList.clear();
+                for (DataSnapshot snapshot1 : snapshot.getChildren()) {
+                    for (DataSnapshot snapshot2 : snapshot1.getChildren()) {
+                        UpdateMagazineModel updateMagazineModel = snapshot2.getValue(UpdateMagazineModel.class);
+
+                        Log.e("Magazines title", updateMagazineModel.getTitle());
+                        Log.e("Magazines description", updateMagazineModel.getDescription());
+
+                        updateMagazineModel.setPublisherId(snapshot2.child("publisherid").getValue().toString());
+
+
+                        updateMagazineModelList.add(updateMagazineModel);
+
                     }
-
-
-                    Log.e("Magazines retrieved", String.valueOf(updateMagazineModelList.size()));
-                    adapter.notifyDataSetChanged();
-
-                    swipeRefreshLayout.setRefreshing(false);
                 }
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-                    swipeRefreshLayout.setRefreshing(false);
+                Log.e("Magazines retrieved", String.valueOf(updateMagazineModelList.size()));
 
+
+                adapter.notifyDataSetChanged();
+
+
+                if (updateMagazineModelList.size() == 0) {
+                    loadingMagazine.setVisibility(View.GONE);
+                    noMagazineFound.setVisibility(View.VISIBLE);
+                } else {
+                    recyclerView.setVisibility(View.VISIBLE);
+                    loadingMagazine.setVisibility(View.GONE);
+                    noMagazineFound.setVisibility(View.GONE);
                 }
-            });
 
-        } else {
 
-            swipeRefreshLayout.setRefreshing(false);
-        }
+                swipeRefreshLayout.setRefreshing(false);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                swipeRefreshLayout.setRefreshing(false);
+
+            }
+        });
+
+
     }
 
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        inflater.inflate(R.menu.logout,menu);
+        inflater.inflate(R.menu.logout, menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
         int idd = item.getItemId();
-        if(idd == R.id.LOGOUT){
+        if (idd == R.id.LOGOUT) {
             Logout();
             return true;
         }
@@ -170,7 +186,7 @@ public class CustomerHomeFragment extends Fragment implements SwipeRefreshLayout
 
         FirebaseAuth.getInstance().signOut();
         Intent intent = new Intent(getActivity(), MainMenu.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }
 }

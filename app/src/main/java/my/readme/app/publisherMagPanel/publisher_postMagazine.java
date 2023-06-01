@@ -186,20 +186,10 @@ public class publisher_postMagazine extends AppCompatActivity {
 
             MagazineDetails info = new MagazineDetails(title, quantity, price, descrption, sImage, PublisherId);
 
-            databaseReference.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    databaseReference.child(PublisherId).child(title).setValue(info);
-                    progressDialog.dismiss();
-                    Toast.makeText(publisher_postMagazine.this, "Magazine Posted Successfully!", Toast.LENGTH_SHORT).show();
-                    clear();
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-                    Toast.makeText(publisher_postMagazine.this, error.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            });
+            databaseReference.child(PublisherId).child(title).setValue(info);
+            progressDialog.dismiss();
+            Toast.makeText(publisher_postMagazine.this, "Magazine Posted Successfully!", Toast.LENGTH_SHORT).show();
+            clear();
 
 
         } else {
@@ -229,7 +219,7 @@ public class publisher_postMagazine extends AppCompatActivity {
         pri.setErrorEnabled(false);
         pri.setError("");
 
-        boolean isValidDescription = false, isValidPrice = false, isValidQuantity = false, isValid = false,isValidtitle=false;
+        boolean isValidDescription = false, isValidPrice = false, isValidQuantity = false, isValid = false, isValidtitle = false;
 
         if (TextUtils.isEmpty(title)) {
             tit.setErrorEnabled(true);
@@ -257,7 +247,7 @@ public class publisher_postMagazine extends AppCompatActivity {
         } else {
             isValidPrice = true;
         }
-        isValid = (isValidDescription && isValidQuantity && isValidPrice &&isValidtitle) ? true : false;
+        isValid = (isValidDescription && isValidQuantity && isValidPrice && isValidtitle) ? true : false;
         return isValid;
     }
 
