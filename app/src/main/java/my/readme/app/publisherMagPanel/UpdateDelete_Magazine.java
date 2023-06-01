@@ -83,6 +83,8 @@ public class UpdateDelete_Magazine extends AppCompatActivity {
     DatabaseReference dataa;
     String Town, City, Area;
 
+    String oldTitle;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,12 +122,48 @@ public class UpdateDelete_Magazine extends AppCompatActivity {
                         description = desc.getEditText().getText().toString().trim();
                         quantity = qty.getEditText().getText().toString().trim();
                         price = pri.getEditText().getText().toString().trim();
+                        title=tit.getEditText().getText().toString().trim();
 
                         if (isValid()) {
-                            if (imageuri != null) {
-                                uploadImage();
+                            if (sImage == null) {
+                               Toast.makeText(UpdateDelete_Magazine.this,"Please Choose an Image",Toast.LENGTH_SHORT).show();
                             } else {
-                                updatedesc(dburi);
+
+
+
+                                final ProgressDialog progressDialog = new ProgressDialog(UpdateDelete_Magazine.this);
+                                progressDialog.setTitle("Updating .....");
+                                progressDialog.setCancelable(false);
+                                progressDialog.show();
+
+
+                                PublisherId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+
+                                MagazineDetails info = new MagazineDetails(title, quantity, price, description, sImage, PublisherId);
+
+                                databaseReference.child(PublisherId).child(oldTitle).removeValue();
+                                databaseReference.addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+
+                                        databaseReference.child(PublisherId).child(title).setValue(info);
+                                        progressDialog.dismiss();
+                                        Toast.makeText(UpdateDelete_Magazine.this, "Magazine Updated Successfully!", Toast.LENGTH_SHORT).show();
+
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+                                        Toast.makeText(UpdateDelete_Magazine.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+
+
+
+
+
                             }
                         }
 
@@ -184,6 +222,8 @@ public class UpdateDelete_Magazine extends AppCompatActivity {
 
                         pri.getEditText().setText(updateMagazineModel.getPrice());
 
+                        oldTitle=updateMagazineModel.getTitle();
+
                         /*Glide.with(UpdateDelete_Magazine.this).load(updateMagazineModel.getImageURL()).into(imageButton);
                         dburi = updateMagazineModel.getImageURL();
 */
@@ -209,8 +249,7 @@ public class UpdateDelete_Magazine extends AppCompatActivity {
 
                 FAuth = FirebaseAuth.getInstance();
                 databaseReference = firebaseDatabase.getInstance().getReference("MagazineDetails");
-                storage = FirebaseStorage.getInstance();
-                storageReference = storage.getReference();
+
 
                 imageButton.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -363,26 +402,7 @@ public class UpdateDelete_Magazine extends AppCompatActivity {
     @SuppressLint("NewApi")
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-      /*  if (requestCode == CropImage.PICK_IMAGE_CHOOSER_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            imageuri = CropImage.getPickImageResultUri(this, data);
-            if (CropImage.isReadExternalStoragePermissionsRequired(this, imageuri)) {
-                mcropimageuri = imageuri;
-                requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 0);
-            } else {
-                startCropImageActivity(imageuri);
 
-            }
-        }
-        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
-            CropImage.ActivityResult result = CropImage.getActivityResult(data);
-            if (resultCode == RESULT_OK) {
-                ((ImageButton) findViewById(R.id.image_upload)).setImageURI(result.getUri());
-                Toast.makeText(this, "Cropped Successfully!", Toast.LENGTH_SHORT).show();
-            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
-                Toast.makeText(this, "Failed To Crop" + result.getError(), Toast.LENGTH_SHORT).show();
-
-            }
-        }*/
 
 
         //Check condition
@@ -415,6 +435,10 @@ public class UpdateDelete_Magazine extends AppCompatActivity {
             }
 
 
+        }else if(requestCode==100 && resultCode==RESULT_CANCELED ){
+            //Clear previous data
+            imageButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_camera_24));
+            sImage=null;
         }
 
 
@@ -422,8 +446,7 @@ public class UpdateDelete_Magazine extends AppCompatActivity {
 
 
     private void selectImage() {
-        //Clear previous data
-        imageButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_camera_24));
+
         //initialise intent
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
 
