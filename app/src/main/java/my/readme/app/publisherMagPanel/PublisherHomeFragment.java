@@ -3,12 +3,14 @@ package my.readme.app.publisherMagPanel;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -34,9 +36,11 @@ import my.readme.app.customerMagPanel.UpdateMagazineModel;
 public class PublisherHomeFragment extends Fragment {
 
     RecyclerView recyclerView;
-    private List<UpdateMagazineModel> updateMagazineModelList;
+    private List<MagazineDetails> updateMagazineModelList;
+   // MagazineDetails info = new MagazineDetails(title, quantity, price, descrption, sImage, PublisherId);
     private PublisherHomeAdapter adapter;
     DatabaseReference dataa;
+    ImageView noMagazine,loading;
     private String Town,City,Area;
 
     @Nullable
@@ -47,12 +51,18 @@ public class PublisherHomeFragment extends Fragment {
 
         v.setBackground(null);
 
-
         getActivity().setTitle("Home");
 
         setHasOptionsMenu(true);
 
-        Toast.makeText(getContext(),"Loading your magazines",Toast.LENGTH_SHORT).show();
+
+
+        noMagazine=v.findViewById(R.id.no_magazine);
+        loading=v.findViewById(R.id.loading_magazines);
+
+
+        noMagazine.setVisibility(View.GONE);
+        loading.setVisibility(View.VISIBLE);
 
         recyclerView = v.findViewById(R.id.Recycle_catalog);
         recyclerView.setHasFixedSize(true);
@@ -85,13 +95,7 @@ public class PublisherHomeFragment extends Fragment {
         });
 
 
-       /* if(updateMagazineModelList.size()==0){
 
-            v.setBackground(getResources().getDrawable(R.drawable.nomagazinehome));
-        }else {
-
-            v.setBackground(null);
-        }*/
 
         return v;
     }
@@ -110,8 +114,21 @@ public class PublisherHomeFragment extends Fragment {
 
                 if (snapshot.child(useridd).exists()) {
                     for (DataSnapshot snapshot1 : snapshot.child(useridd).getChildren()) {
-                        UpdateMagazineModel updateMagazineModel = snapshot1.getValue(UpdateMagazineModel.class);
-                        updateMagazineModelList.add(updateMagazineModel);
+
+                       Log.e("Magazine Id", snapshot1.getKey());
+
+                           MagazineDetails updateMagazineModel = snapshot1.getValue(MagazineDetails.class);
+
+                            Log.e("Magazine Title", snapshot1.child("title").getValue().toString());
+                            Log.e("Magazine Quantity", snapshot1.child("quantity").getValue().toString());
+                            Log.e("Magazine Price", snapshot1.child("price").getValue().toString());
+                            Log.e("Magazine Description", snapshot1.child("description").getValue().toString());
+                          //  Log.e("Magazine Image", snapshot1.child("imageURL").getValue().toString());
+                            Log.e("Magazine PublisherId", snapshot1.child("publisherid").getValue().toString());
+
+
+                           updateMagazineModelList.add(updateMagazineModel);
+
                     }
                 }
                 adapter = new PublisherHomeAdapter(getContext(),updateMagazineModelList);
@@ -119,11 +136,21 @@ public class PublisherHomeFragment extends Fragment {
 
 
 
+                if (updateMagazineModelList.isEmpty()){
+                    noMagazine.setVisibility(View.VISIBLE);
+                    loading.setVisibility(View.GONE);
+                }
+                else{
+                    noMagazine.setVisibility(View.GONE);
+                    loading.setVisibility(View.GONE);
+                }
 
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(getContext(), "Error"+error.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.e("Error",error.getMessage());
 
             }
         });

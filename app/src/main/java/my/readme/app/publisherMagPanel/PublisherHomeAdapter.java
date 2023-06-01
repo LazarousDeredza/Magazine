@@ -19,9 +19,9 @@ import my.readme.app.customerMagPanel.UpdateMagazineModel;
 public class PublisherHomeAdapter extends RecyclerView.Adapter<PublisherHomeAdapter.ViewHolder> {
 
     private Context mcont;
-    private List<UpdateMagazineModel> updateMagazineModelList;
+    private List<MagazineDetails> updateMagazineModelList;
 
-    public PublisherHomeAdapter(Context context , List<UpdateMagazineModel>updateMagazineModelList){
+    public PublisherHomeAdapter(Context context , List<MagazineDetails>updateMagazineModelList){
         this.updateMagazineModelList = updateMagazineModelList;
         this.mcont = context;
     }
@@ -36,7 +36,7 @@ public class PublisherHomeAdapter extends RecyclerView.Adapter<PublisherHomeAdap
     @Override
     public void onBindViewHolder(@NonNull PublisherHomeAdapter.ViewHolder holder, int position) {
 
-        final UpdateMagazineModel updateMagazineModel = updateMagazineModelList.get(position);
+        final MagazineDetails updateMagazineModel = updateMagazineModelList.get(position);
         holder.magazines.setText(updateMagazineModel.getTitle());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

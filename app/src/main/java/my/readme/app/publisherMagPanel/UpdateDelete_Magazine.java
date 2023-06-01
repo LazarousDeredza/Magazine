@@ -177,10 +177,10 @@ public class UpdateDelete_Magazine extends AppCompatActivity {
                 databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        UpdateMagazineModel updateMagazineModel = snapshot.getValue(UpdateMagazineModel.class);
+                        MagazineDetails updateMagazineModel = snapshot.getValue(MagazineDetails.class);
                         desc.getEditText().setText(updateMagazineModel.getDescription());
                         qty.getEditText().setText(updateMagazineModel.getQuantity());
-                        Title.setText(updateMagazineModel.getTitle());
+                        tit.getEditText().setText(updateMagazineModel.getTitle());
 
                         pri.getEditText().setText(updateMagazineModel.getPrice());
 
