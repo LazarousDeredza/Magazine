@@ -14,17 +14,56 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.namespace.R;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import my.readme.app.MainMenu;
 
 public class CustomerProfileFragment extends Fragment {
+
+    TextInputEditText name;
+    TextInputLayout nameLayout;
+
+
+    DatabaseReference reference;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_customerprofile, null);
         getActivity().setTitle("Profile");
+
+        setHasOptionsMenu(true);
+
+        name = v.findViewById(R.id.et_name);
+
+
+        reference= FirebaseDatabase.getInstance().getReference("Customer").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+
+
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                    String Name = snapshot.child("First Name").getValue().toString();
+                    name.setText(Name);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+
+
         return v;
     }
 

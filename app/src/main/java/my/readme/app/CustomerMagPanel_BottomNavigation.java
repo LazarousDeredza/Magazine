@@ -20,7 +20,7 @@ import my.readme.app.customerMagPanel.CustomerOrdersFragment;
 import my.readme.app.customerMagPanel.CustomerProfileFragment;
 import my.readme.app.customerMagPanel.CustomerTrackFragment;
 
-public class CustomerMagPanel_BottomNavigation extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener{
+public class CustomerMagPanel_BottomNavigation extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,16 +69,19 @@ public class CustomerMagPanel_BottomNavigation extends AppCompatActivity impleme
 
         Fragment fragment = null;
 
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.cust_Home:
-                fragment=new CustomerHomeFragment();
+                fragment = new CustomerHomeFragment();
                 break;
 
             case R.id.cust_profile:
-                fragment=new Fragment(R.layout.fragment_customerprofile);
+                fragment = new Fragment(R.layout.fragment_customerprofile);
                 break;
-                case R.id.cart:
-                fragment=new Fragment(R.layout.fragment_customercart);
+            case R.id.Cust_order:
+                fragment = new Fragment(R.layout.fragment_customerorders);
+                break;
+            case R.id.cart:
+                fragment = new Fragment(R.layout.fragment_customercart);
                 break;
 
             case R.id.logout:
@@ -101,8 +104,8 @@ public class CustomerMagPanel_BottomNavigation extends AppCompatActivity impleme
 
     private boolean loadfragment(Fragment fragment) {
 
-        if(fragment != null){
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).commit();
+        if (fragment != null) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
             return true;
         }
         return false;

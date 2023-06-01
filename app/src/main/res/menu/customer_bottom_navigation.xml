@@ -9,14 +9,15 @@
         android:title="Cart"
         android:id="@+id/cart"
         android:icon="@drawable/baseline_shopping_cart_24"/>
-   <!-- <item
+<item
         android:title="Orders"
         android:id="@+id/Cust_order"
         android:icon="@drawable/ic_orders_24" />
-    <item
-        android:title="Track"
-        android:id="@+id/track"
-        android:icon="@drawable/baseline_access_time_24"/>-->
+    <!--
+ <item
+     android:title="Track"
+     android:id="@+id/track"
+     android:icon="@drawable/baseline_access_time_24"/>-->
     <item
         android:title="Profile"
         android:id="@+id/cust_profile"
