@@ -10,31 +10,25 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.core.view.ActionProvider;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
 
-import com.bumptech.glide.Glide;
+import com.example.namespace.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-
-import java.util.List;
-
-import com.example.namespace.R;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import my.readme.app.publisherMagPanel.MagazineDetails;
-import my.readme.app.publisherMagPanel.publisher_postMagazine;
+import java.util.List;
 
-public class CustomerHomeAdapter extends RecyclerView.Adapter<CustomerHomeAdapter.ViewHolder> {
+import my.readme.app.publisherMagPanel.MagazineDetails;
+
+public class CustomerCartAdapter extends RecyclerView.Adapter<CustomerCartAdapter.ViewHolder> {
 
     private Context mcontext;
     private List<UpdateMagazineModel> updateMagazineModelList;
@@ -42,7 +36,7 @@ public class CustomerHomeAdapter extends RecyclerView.Adapter<CustomerHomeAdapte
 
     String userid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-    public CustomerHomeAdapter(Context context, List<UpdateMagazineModel> updateMagazineModelList) {
+    public CustomerCartAdapter(Context context, List<UpdateMagazineModel> updateMagazineModelList) {
 
         this.updateMagazineModelList = updateMagazineModelList;
         this.mcontext = context;
@@ -51,17 +45,20 @@ public class CustomerHomeAdapter extends RecyclerView.Adapter<CustomerHomeAdapte
 
     @NonNull
     @Override
-    public CustomerHomeAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mcontext).inflate(R.layout.customer_menumagazine, parent, false);
-        return new CustomerHomeAdapter.ViewHolder(view);
+    public CustomerCartAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(mcontext).inflate(R.layout.cart_customer_menumagazine, parent, false);
+        return new CustomerCartAdapter.ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CustomerHomeAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull CustomerCartAdapter.ViewHolder holder, int position) {
 
         final UpdateMagazineModel updateMagazineModel = updateMagazineModelList.get(position);
         //Glide.with(mcontext).load(updateMagazineModel.getImageURL()).into(holder.imageView);
         holder.Title.setText(updateMagazineModel.getTitle());
+        updateMagazineModel.getPublisherid();
+        holder.Price.setText("Price: $ " + updateMagazineModel.getPrice());
+
         String title = updateMagazineModel.getTitle();
         String publisherId = updateMagazineModel.getPublisherid();
 
@@ -70,9 +67,11 @@ public class CustomerHomeAdapter extends RecyclerView.Adapter<CustomerHomeAdapte
 
         String sImage = updateMagazineModel.getImageURL();
         String quantity = updateMagazineModel.getQuantity();
-        holder.Price.setText("Price: $ " + updateMagazineModel.getPrice());
+
+
         //initialise byte array from encoded string
         byte[] bytes = Base64.decode(updateMagazineModel.getImageURL(), Base64.DEFAULT);
+
         //Initialize bitmap
         Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
         //Set bitmap on image view
@@ -96,15 +95,16 @@ public class CustomerHomeAdapter extends RecyclerView.Adapter<CustomerHomeAdapte
         });
 
 
+
         databaseReference = FirebaseDatabase.getInstance().getReference("Customer").child(userid);
 
-        holder.btnAddToCart.setOnClickListener(new View.OnClickListener() {
+        holder.remove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Toast.makeText(v.getContext(), "Making your order please wait !!",Toast.LENGTH_SHORT).show();
 
                 ProgressDialog p = new ProgressDialog(v.getContext());
-                p.setMessage("Adding to cart \nplease wait");
+                p.setMessage("Removing from cart \nplease wait");
                 p.setCancelable(false);
                 p.show();
 
@@ -113,12 +113,9 @@ public class CustomerHomeAdapter extends RecyclerView.Adapter<CustomerHomeAdapte
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
 
 
-
-                        MagazineDetails info = new MagazineDetails(title, quantity, price, description, sImage, publisherId);
-
-                        databaseReference.child("cart").child(title).setValue(info);
+                        databaseReference.child("cart").child(title).removeValue();
                         p.dismiss();
-                        Toast.makeText(v.getContext(),  "Magazine added to cart Successfully!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(v.getContext(),  "Magazine removed Successfully!", Toast.LENGTH_SHORT).show();
 
 
 
@@ -132,7 +129,7 @@ public class CustomerHomeAdapter extends RecyclerView.Adapter<CustomerHomeAdapte
             }
         });
 
-        holder.btnOrder.setOnClickListener(new View.OnClickListener() {
+        holder.order.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Toast.makeText(v.getContext(), "Making your order please wait !!",Toast.LENGTH_SHORT).show();
@@ -148,7 +145,7 @@ public class CustomerHomeAdapter extends RecyclerView.Adapter<CustomerHomeAdapte
 
 
 
-                        MagazineDetails info = new MagazineDetails(title, quantity, price, description, sImage, publisherId,"Pending");
+                        MagazineDetails info = new MagazineDetails(title, quantity, price, description, sImage, publisherId, "Pending");
 
                         databaseReference.child("orders").child(title).setValue(info);
 
@@ -167,6 +164,7 @@ public class CustomerHomeAdapter extends RecyclerView.Adapter<CustomerHomeAdapte
             }
         });
 
+
     }
 
     @Override
@@ -180,10 +178,10 @@ public class CustomerHomeAdapter extends RecyclerView.Adapter<CustomerHomeAdapte
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        ImageView imageView, like;
+        ImageView imageView,like;
         TextView Title, Price;
 
-        Button btnOrder, btnAddToCart;
+        Button order,remove;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -191,9 +189,10 @@ public class CustomerHomeAdapter extends RecyclerView.Adapter<CustomerHomeAdapte
             imageView = itemView.findViewById(R.id.menu_image);
             Title = itemView.findViewById(R.id.title);
             Price = itemView.findViewById(R.id.price);
-            btnOrder = itemView.findViewById(R.id.btnOder);
-            btnAddToCart = itemView.findViewById(R.id.btnAddToCart);
-            like = itemView.findViewById(R.id.fav);
+            like=itemView.findViewById(R.id.like);
+            order=itemView.findViewById(R.id.order);
+            remove=itemView.findViewById(R.id.remove);
+
 
 
         }

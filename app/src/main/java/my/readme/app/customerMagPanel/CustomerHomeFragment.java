@@ -128,7 +128,6 @@ public class CustomerHomeFragment extends Fragment implements SwipeRefreshLayout
                         Log.e("Magazines title", updateMagazineModel.getTitle());
                         Log.e("Magazines description", updateMagazineModel.getDescription());
 
-                        updateMagazineModel.setPublisherId(snapshot2.child("publisherid").getValue().toString());
 
 
                         updateMagazineModelList.add(updateMagazineModel);

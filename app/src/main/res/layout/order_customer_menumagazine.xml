@@ -2,10 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-   android:orientation="vertical"
+    android:background="?attr/selectableItemBackground"
     android:clickable="true"
     android:focusable="true"
-    android:background="?attr/selectableItemBackground"
+    android:orientation="vertical"
     android:padding="8dp">
 
 
@@ -62,6 +62,23 @@
 
                 >
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Status : "
+                    android:textSize="20sp"
+                    android:textStyle="bold"></TextView>
+
+                <TextView
+                    android:id="@+id/status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/btnblueish"
+                    android:padding="4dp"
+                    android:text="Pending"
+                    android:textSize="20sp"
+                    android:textStyle="bold"></TextView>
+
                 <Button
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -69,8 +86,8 @@
                     android:backgroundTint="@color/OffWhite"
                     android:shadowColor="@color/Black"
                     android:text="Add to cart"
-                    android:id="@+id/btnAddToCart"
-                    android:textColor="@color/blueish">
+                    android:textColor="@color/blueish"
+                    android:visibility="gone">
 
                 </Button>
             </LinearLayout>
@@ -78,23 +95,24 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="right"
+                android:gravity="left"
                 android:orientation="horizontal">
 
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="#89B4D6"
-                    android:id="@+id/btnOder"
-                    android:text="Order">
+                    android:backgroundTint="#F10936"
+                    android:text="Cancel"
+                    android:id="@+id/remove"
+                    android:textColor="@color/white"
+                    android:textStyle="bold">
 
                 </Button>
 
                 <ImageView
-                    android:id="@+id/fav"
+                    android:id="@+id/like"
                     android:layout_width="50dp"
                     android:layout_height="40dp"
-                    android:clickable="true"
                     android:layout_marginStart="30dp"
                     android:layout_marginTop="3dp"
                     android:src="@drawable/fav_unmarked">
@@ -105,6 +123,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
                 android:text="More Info"
                 android:textColor="@color/blueish"
                 android:textStyle="italic"></TextView>

@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Profile"
+        android:text="Your Profile"
         android:textColor="@color/blueish"
         android:textSize="30sp"
         android:textStyle="bold"
@@ -21,13 +21,13 @@
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profile_image"
-        android:layout_width="158dp"
-        android:layout_height="135dp"
+        android:layout_width="138dp"
+        android:layout_height="106dp"
         android:layout_marginTop="10dp"
-        android:src="@drawable/img1"
+        android:scaleType="centerCrop"
+        android:src="@drawable/profile"
         app:civ_border_color="#FF000000"
         app:civ_border_width="2dp"
-        android:scaleType="centerCrop"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_profile" />
@@ -49,6 +49,7 @@ android:layout_marginTop="10dp"
             android:layout_height="match_parent"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
+            android:layout_marginBottom="80dp"
             android:background="@drawable/background_shape"
             android:orientation="vertical"
             android:padding="15dp"
@@ -67,12 +68,14 @@ android:layout_marginTop="10dp"
                     android:id="@+id/Fname"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:enabled="false"
                     android:layout_marginTop="15dp">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="48dp"
                         android:hint="FirstName"
+                        android:enabled="false"
                         android:inputType="text" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -87,6 +90,7 @@ android:layout_marginTop="10dp"
                         android:layout_width="match_parent"
                         android:layout_height="48dp"
                         android:hint="LastName"
+                        android:enabled="false"
                         android:inputType="text" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -102,6 +106,7 @@ android:layout_marginTop="10dp"
                         android:drawableLeft="@drawable/baseline_email_24"
                         android:drawablePadding="10dp"
                         android:hint="Email id"
+                        android:enabled="false"
                         android:inputType="text|textEmailAddress" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -116,6 +121,7 @@ android:layout_marginTop="10dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Password"
+                        android:enabled="false"
                         android:inputType="textPassword" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -143,6 +149,7 @@ android:layout_marginTop="10dp"
                             android:layout_width="match_parent"
                             android:layout_height="48dp"
                             android:hint="MobileNumber"
+                            android:enabled="false"
                             android:inputType="number" />
                     </com.google.android.material.textfield.TextInputLayout>
                 </LinearLayout>
@@ -158,6 +165,7 @@ android:layout_marginTop="10dp"
                         android:layout_width="match_parent"
                         android:layout_height="48dp"
                         android:hint="Local Address"
+                        android:enabled="false"
                         android:inputType="textMultiLine" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -171,6 +179,7 @@ android:layout_marginTop="10dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Area"
+                        android:enabled="false"
                         android:inputType="textMultiLine" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -183,6 +192,7 @@ android:layout_marginTop="10dp"
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:enabled="false"
                         android:hint="Pin Code"
                         android:inputType="number" />
                 </com.google.android.material.textfield.TextInputLayout>
@@ -192,6 +202,7 @@ android:layout_marginTop="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="City"
+                    android:enabled="false"
                     android:textSize="14sp" />
 
                 <Spinner
@@ -199,6 +210,7 @@ android:layout_marginTop="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
+                    android:enabled="false"
                     android:entries="@array/City" />
 
                 <TextView
@@ -206,11 +218,13 @@ android:layout_marginTop="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="11dp"
+                    android:enabled="false"
                     android:text="Town" />
 
                 <Spinner
                     android:id="@+id/Towns"
                     android:layout_width="match_parent"
+
                     android:layout_height="48dp"
                     android:layout_marginTop="5dp" />
 
@@ -218,9 +232,12 @@ android:layout_marginTop="10dp"
                     android:id="@+id/button"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
+                    android:layout_marginStart="80dp"
+                    android:layout_marginEnd="80dp"
                     android:layout_marginTop="20dp"
-                    android:background="@drawable/profile"
+                   android:background="@color/green"
                     android:text="Update"
+                    android:enabled="false"
                     android:textAllCaps="true"
                     android:textColor="#FFFFFF"
                     android:textSize="18sp" />

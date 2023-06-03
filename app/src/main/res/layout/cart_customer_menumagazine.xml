@@ -18,6 +18,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:layout_marginTop="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -58,19 +59,21 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
 
                 >
 
                 <Button
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/cardview_dark_background"
-                    android:backgroundTint="@color/OffWhite"
+                    android:background="@drawable/button_shape"
+                   android:textColorHighlight="@color/white"
                     android:shadowColor="@color/Black"
-                    android:text="Add to cart"
-                    android:id="@+id/btnAddToCart"
-                    android:textColor="@color/blueish">
+                    android:text="order"
+                    android:id="@+id/order"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/white">
 
                 </Button>
             </LinearLayout>
@@ -78,23 +81,24 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="right"
+                android:gravity="left"
                 android:orientation="horizontal">
 
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="#89B4D6"
-                    android:id="@+id/btnOder"
-                    android:text="Order">
+                    android:backgroundTint="#F10936"
+                   android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:id="@+id/remove"
+                    android:text="Remove">
 
                 </Button>
 
                 <ImageView
-                    android:id="@+id/fav"
+                    android:id="@+id/like"
                     android:layout_width="50dp"
                     android:layout_height="40dp"
-                    android:clickable="true"
                     android:layout_marginStart="30dp"
                     android:layout_marginTop="3dp"
                     android:src="@drawable/fav_unmarked">
@@ -106,6 +110,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="More Info"
+                android:layout_marginTop="10dp"
                 android:textColor="@color/blueish"
                 android:textStyle="italic"></TextView>
         </LinearLayout>

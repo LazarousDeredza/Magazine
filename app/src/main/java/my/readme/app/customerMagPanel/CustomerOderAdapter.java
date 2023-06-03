@@ -2,6 +2,7 @@ package my.readme.app.customerMagPanel;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Base64;
@@ -10,39 +11,34 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.core.view.ActionProvider;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
 
-import com.bumptech.glide.Glide;
+import com.example.namespace.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-
-import java.util.List;
-
-import com.example.namespace.R;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import my.readme.app.publisherMagPanel.MagazineDetails;
-import my.readme.app.publisherMagPanel.publisher_postMagazine;
+import java.util.List;
 
-public class CustomerHomeAdapter extends RecyclerView.Adapter<CustomerHomeAdapter.ViewHolder> {
+import my.readme.app.publisherMagPanel.MagazineDetails;
+
+public class CustomerOderAdapter extends RecyclerView.Adapter<CustomerOderAdapter.ViewHolder> {
 
     private Context mcontext;
     private List<UpdateMagazineModel> updateMagazineModelList;
     DatabaseReference databaseReference;
 
+
     String userid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-    public CustomerHomeAdapter(Context context, List<UpdateMagazineModel> updateMagazineModelList) {
+    public CustomerOderAdapter(Context context, List<UpdateMagazineModel> updateMagazineModelList) {
 
         this.updateMagazineModelList = updateMagazineModelList;
         this.mcontext = context;
@@ -51,17 +47,20 @@ public class CustomerHomeAdapter extends RecyclerView.Adapter<CustomerHomeAdapte
 
     @NonNull
     @Override
-    public CustomerHomeAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mcontext).inflate(R.layout.customer_menumagazine, parent, false);
-        return new CustomerHomeAdapter.ViewHolder(view);
+    public CustomerOderAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(mcontext).inflate(R.layout.order_customer_menumagazine, parent, false);
+        return new CustomerOderAdapter.ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CustomerHomeAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull CustomerOderAdapter.ViewHolder holder, int position) {
 
         final UpdateMagazineModel updateMagazineModel = updateMagazineModelList.get(position);
         //Glide.with(mcontext).load(updateMagazineModel.getImageURL()).into(holder.imageView);
         holder.Title.setText(updateMagazineModel.getTitle());
+        updateMagazineModel.getPublisherid();
+        holder.Price.setText("Price: $ " + updateMagazineModel.getPrice());
+
         String title = updateMagazineModel.getTitle();
         String publisherId = updateMagazineModel.getPublisherid();
 
@@ -70,9 +69,11 @@ public class CustomerHomeAdapter extends RecyclerView.Adapter<CustomerHomeAdapte
 
         String sImage = updateMagazineModel.getImageURL();
         String quantity = updateMagazineModel.getQuantity();
-        holder.Price.setText("Price: $ " + updateMagazineModel.getPrice());
+        String status = updateMagazineModel.getStatus();
+
         //initialise byte array from encoded string
         byte[] bytes = Base64.decode(updateMagazineModel.getImageURL(), Base64.DEFAULT);
+
         //Initialize bitmap
         Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
         //Set bitmap on image view
@@ -98,13 +99,14 @@ public class CustomerHomeAdapter extends RecyclerView.Adapter<CustomerHomeAdapte
 
         databaseReference = FirebaseDatabase.getInstance().getReference("Customer").child(userid);
 
-        holder.btnAddToCart.setOnClickListener(new View.OnClickListener() {
+
+        holder.cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Toast.makeText(v.getContext(), "Making your order please wait !!",Toast.LENGTH_SHORT).show();
 
                 ProgressDialog p = new ProgressDialog(v.getContext());
-                p.setMessage("Adding to cart \nplease wait");
+                p.setMessage("Canceling Your order \nplease wait");
                 p.setCancelable(false);
                 p.show();
 
@@ -113,13 +115,11 @@ public class CustomerHomeAdapter extends RecyclerView.Adapter<CustomerHomeAdapte
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
 
 
-
-                        MagazineDetails info = new MagazineDetails(title, quantity, price, description, sImage, publisherId);
-
-                        databaseReference.child("cart").child(title).setValue(info);
+                        databaseReference.child("orders").child(title).child("status").setValue("Canceled");
                         p.dismiss();
-                        Toast.makeText(v.getContext(),  "Magazine added to cart Successfully!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(v.getContext(), "Order cancelled Successfully!", Toast.LENGTH_SHORT).show();
 
+                        notifyDataSetChanged();
 
 
                     }
@@ -132,40 +132,18 @@ public class CustomerHomeAdapter extends RecyclerView.Adapter<CustomerHomeAdapte
             }
         });
 
-        holder.btnOrder.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Toast.makeText(v.getContext(), "Making your order please wait !!",Toast.LENGTH_SHORT).show();
 
-                ProgressDialog p = new ProgressDialog(v.getContext());
-                p.setMessage("Placing your order please wait");
-                p.setCancelable(false);
-                p.show();
-
-                databaseReference.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+        holder.status.setText(status);
+        if (status.equals("Pending")) {
+            holder.status.setBackground(mcontext.getResources().getDrawable(R.drawable.btnblueish));
 
 
+        } else if (status.equals("Canceled")) {
+            holder.status.setBackground(mcontext.getResources().getDrawable(R.drawable.btnred));
+        } else if (status.equals("Delivered")) {
+            holder.status.setBackground(mcontext.getResources().getDrawable(R.drawable.button_shape));
+        }
 
-                        MagazineDetails info = new MagazineDetails(title, quantity, price, description, sImage, publisherId,"Pending");
-
-                        databaseReference.child("orders").child(title).setValue(info);
-
-                        p.dismiss();
-                        Toast.makeText(v.getContext(),  "Order placed Successfully!", Toast.LENGTH_SHORT).show();
-
-
-
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
-            }
-        });
 
     }
 
@@ -181,9 +159,8 @@ public class CustomerHomeAdapter extends RecyclerView.Adapter<CustomerHomeAdapte
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         ImageView imageView, like;
-        TextView Title, Price;
-
-        Button btnOrder, btnAddToCart;
+        TextView Title, Price, status;
+        Button cancel;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -191,9 +168,10 @@ public class CustomerHomeAdapter extends RecyclerView.Adapter<CustomerHomeAdapte
             imageView = itemView.findViewById(R.id.menu_image);
             Title = itemView.findViewById(R.id.title);
             Price = itemView.findViewById(R.id.price);
-            btnOrder = itemView.findViewById(R.id.btnOder);
-            btnAddToCart = itemView.findViewById(R.id.btnAddToCart);
-            like = itemView.findViewById(R.id.fav);
+            status = itemView.findViewById(R.id.status);
+
+            like = itemView.findViewById(R.id.like);
+            cancel = itemView.findViewById(R.id.remove);
 
 
         }

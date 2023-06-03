@@ -2,22 +2,32 @@ package my.readme.app.customerMagPanel;
 
 public class UpdateMagazineModel {
 
-    String title,description,quantity,price,imageURL,publisherId;
-
+    public String title,quantity,price,description,imageURL,publisherid;
+    // Alt+insert
+    String status;
 
     public UpdateMagazineModel(){
 
     }
 
-    public UpdateMagazineModel(String title, String description, String quantity, String price, String imageURL, String publisherId) {
+    public UpdateMagazineModel(String title, String description, String quantity, String price, String imageURL, String publisherid) {
         this.title = title;
         this.description = description;
         this.quantity = quantity;
         this.price = price;
         this.imageURL = imageURL;
-        this.publisherId = publisherId;
+        this.publisherid = publisherid;
     }
 
+    public UpdateMagazineModel(String title, String description, String quantity, String price, String imageURL, String publisherid, String status) {
+        this.title = title;
+        this.description = description;
+        this.quantity = quantity;
+        this.price = price;
+        this.imageURL = imageURL;
+        this.publisherid = publisherid;
+        this.status = status;
+    }
 
     public String getTitle() {
         return title;
@@ -37,6 +47,14 @@ public class UpdateMagazineModel {
 
     public String getQuantity() {
         return quantity;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public void setQuantity(String quantity) {
@@ -59,12 +77,12 @@ public class UpdateMagazineModel {
         this.imageURL = imageURL;
     }
 
-    public String getPublisherId() {
-        return publisherId;
+    public String getPublisherid() {
+        return publisherid;
     }
 
-    public void setPublisherId(String publisherId) {
-        this.publisherId = publisherId;
+    public void setPublisherid(String publisherid) {
+        this.publisherid = publisherid;
     }
 }
 

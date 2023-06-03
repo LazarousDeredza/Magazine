@@ -4,7 +4,7 @@ public class MagazineDetails {
 
     public String title,quantity,price,description,imageURL,publisherid;
     // Alt+insert
-
+   String status;
 
     public MagazineDetails() {
     }
@@ -17,6 +17,19 @@ public class MagazineDetails {
         this.imageURL = imageURL;
         this.publisherid = publisherid;
     }
+
+    public MagazineDetails(String title, String quantity, String price, String description, String imageURL, String publisherid, String status) {
+        this.title = title;
+        this.quantity = quantity;
+        this.price = price;
+        this.description = description;
+        this.imageURL = imageURL;
+        this.publisherid = publisherid;
+        this.status = status;
+    }
+
+
+
 
     public String getTitle() {
         return title;
@@ -56,6 +69,14 @@ public class MagazineDetails {
 
     public void setImageURL(String imageURL) {
         this.imageURL = imageURL;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public String getPublisherid() {
