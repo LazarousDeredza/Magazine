@@ -9,6 +9,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -37,7 +38,7 @@ public class PublisherRegistration extends AppCompatActivity {
     String[] Lefke = {"Gemikonagi", "Yedidalga", "Yesilyurt"};
     String[] Lefkosa = {"Gonyeli", "Hamitkoy", "Haspolat"};
 
-    TextInputLayout Fname, Lname, Email, Pass, cpass, mobileno, houseno, area, pincode;
+    TextInputLayout Fname, Lname, Email, Pass, cpass, mobileno, houseno, area, pincode, city, town;
     Spinner Cityspin, Townspin;
     Button signup, Emaill, Phone;
     CountryCodePicker Cpp;
@@ -58,12 +59,14 @@ public class PublisherRegistration extends AppCompatActivity {
         Email = (TextInputLayout) findViewById(R.id.Email);
         Pass = (TextInputLayout) findViewById(R.id.Pwd);
         cpass = (TextInputLayout) findViewById(R.id.Cpass);
-        mobileno = (TextInputLayout) findViewById(R.id.Mobileno);
+        mobileno = (TextInputLayout) findViewById(R.id.Mobilenumber);
         houseno = (TextInputLayout) findViewById(R.id.houseNo);
         pincode = (TextInputLayout) findViewById(R.id.Pincode);
-        Cityspin = (Spinner) findViewById(R.id.Cityy);
-        Townspin = (Spinner) findViewById(R.id.Towns);
+       /* Cityspin = (Spinner) findViewById(R.id.Cityy);
+        Townspin = (Spinner) findViewById(R.id.Towns);*/
         area = (TextInputLayout) findViewById(R.id.Area);
+        town = (TextInputLayout) findViewById(R.id.townLayout);
+        city = (TextInputLayout) findViewById(R.id.cityLayout);
 
         signup = (Button)findViewById(R.id.Signup);
         Emaill = (Button)findViewById(R.id.email);
@@ -71,7 +74,7 @@ public class PublisherRegistration extends AppCompatActivity {
 
         Cpp = (CountryCodePicker)findViewById(R.id.CountryCode);
 
-        Cityspin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+       /* Cityspin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
@@ -110,7 +113,7 @@ public class PublisherRegistration extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> parent) {
 
             }
-        });
+        });*/
 
         databaseReference = FirebaseDatabase.getInstance().getReference("Publisher");
         FAuth = FirebaseAuth.getInstance();
@@ -122,11 +125,17 @@ public class PublisherRegistration extends AppCompatActivity {
                 lname = Objects.requireNonNull(Lname.getEditText()).getText().toString().trim();
                 emailid = Objects.requireNonNull(Email.getEditText()).getText().toString().trim();
                 mobile = Objects.requireNonNull(mobileno.getEditText()).getText().toString().trim();
+                String phonenumber = Cpp.getSelectedCountryCodeWithPlus() + mobile;
+                mobile = phonenumber;
+
                 password = Objects.requireNonNull(Pass.getEditText()).getText().toString().trim();
                 confpassword = Objects.requireNonNull(cpass.getEditText()).getText().toString().trim();
                 Area = Objects.requireNonNull(area.getEditText()).getText().toString().trim();
                 house = Objects.requireNonNull(houseno.getEditText()).getText().toString().trim();
                 Pincode = Objects.requireNonNull(pincode.getEditText()).getText().toString().trim();
+                cityy = Objects.requireNonNull(city.getEditText()).getText().toString().trim();
+                townn = Objects.requireNonNull(town.getEditText()).getText().toString().trim();
+
 
                 if (isValid()){
                     final ProgressDialog mDialog = new ProgressDialog(PublisherRegistration.this);
@@ -203,9 +212,11 @@ public class PublisherRegistration extends AppCompatActivity {
 
                                                                             dialog.dismiss();
 
-                                                                            String phonenumber = Cpp.getSelectedCountryCodeWithPlus() + mobile;
-                                                                            Intent b = new Intent(PublisherRegistration.this, PublisherVerifyPhone.class);
+                                                                           // String phonenumber = Cpp.getSelectedCountryCodeWithPlus() + mobile;
+                                                                            //Intent b = new Intent(PublisherRegistration.this, PublisherVerifyPhone.class);
+                                                                            Intent b = new Intent(PublisherRegistration.this, MainMenu.class);
                                                                             b.putExtra("phonenumber",phonenumber);
+                                                                            Log.e("phone",phonenumber);
                                                                             startActivity(b);
 
                                                                         }
@@ -271,8 +282,13 @@ public class PublisherRegistration extends AppCompatActivity {
         houseno.setError("");
         pincode.setErrorEnabled(false);
         pincode.setError("");
+        city.setErrorEnabled(false);
+        city.setError("");
+        town.setErrorEnabled(false);
+        town.setError("");
 
-        boolean isValid=false,isValidhouseno=false,isValidlname=false,isValidname=false,isValidemail=false,isValidpassword=false,isValidconfpassword=false,isValidmobilenum=false,isValidarea=false,isValidpincode=false;
+
+        boolean isValid=false,isValidhouseno=false,isValidlname=false,isValidname=false,isValidemail=false,isValidpassword=false,isValidconfpassword=false,isValidmobilenum=false,isValidarea=false,isValidpincode=false,isValidcity=false,isValidtown=false;
         if(TextUtils.isEmpty(fname)){
             Fname.setErrorEnabled(true);
             Fname.setError("Enter First Name");
@@ -322,7 +338,7 @@ public class PublisherRegistration extends AppCompatActivity {
             mobileno.setErrorEnabled(true);
             mobileno.setError("Mobile Number Is Required");
         }else{
-            if(mobile.length()<10){
+            if(mobile.length()<9 || mobile.length()>13){
                 mobileno.setErrorEnabled(true);
                 mobileno.setError("Invalid Mobile Number");
             }else{
@@ -348,7 +364,21 @@ public class PublisherRegistration extends AppCompatActivity {
             isValidhouseno = true;
         }
 
-        isValid = isValidarea && isValidconfpassword && isValidpassword && isValidpincode && isValidemail && isValidmobilenum && isValidname && isValidhouseno && isValidlname;
+        if(TextUtils.isEmpty(cityy)){
+            city.setErrorEnabled(true);
+            city.setError("Please Enter City");
+        }else{
+            isValidcity = true;
+        }
+
+        if(TextUtils.isEmpty(townn)){
+            town.setErrorEnabled(true);
+            town.setError("Please Enter Town");
+        }else{
+            isValidtown = true;
+        }
+
+        isValid = isValidarea && isValidconfpassword && isValidpassword && isValidpincode && isValidemail && isValidmobilenum && isValidname && isValidhouseno && isValidlname&&isValidcity && isValidtown  ;
         return isValid;
 
 

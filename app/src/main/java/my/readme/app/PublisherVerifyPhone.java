@@ -8,6 +8,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -50,22 +51,24 @@ public class PublisherVerifyPhone extends AppCompatActivity {
         setContentView(R.layout.activity_publisher_verify_phone);
 
         String UUID= Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
-        reference = FirebaseDatabase.getInstance().getReference().child("Publisher");
+       /* reference = FirebaseDatabase.getInstance().getReference().child("Publisher");
 
         reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                phoneno=snapshot.child(UUID).child("phone").getValue().toString();
+                phoneno=snapshot.child(UUID).child("mobile").getValue().toString();
+
+                Log.e("phone to verify",phoneno);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
-        });
+        });*/
 
 
-        //phoneno =getIntent().getStringExtra("phonenumber").trim();
+        phoneno =getIntent().getStringExtra("phonenumber").trim();
 
         entercode=(EditText) findViewById(R.id.code);
         txt =(TextView) findViewById(R.id.text);

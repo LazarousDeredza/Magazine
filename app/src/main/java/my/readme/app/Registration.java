@@ -1,8 +1,5 @@
 package my.readme.app;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -10,11 +7,13 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.namespace.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -26,16 +25,15 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.hbb20.CountryCodePicker;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Objects;
 
 public class Registration extends AppCompatActivity {
 
     String[] Lefke = {"Gemikonagi", "Yedidalga", "Yesilyurt"};
     String[] Lefkosa = {"Gonyeli", "Hamitkoy", "Haspolat"};
 
-    TextInputLayout Fname,Lname,Email,Pass,cpass,mobileno,localaddress,area,pincode;
+    TextInputLayout Fname,Lname,Email,Pass,cpass,mobileno,localaddress,area,pincode,cityLayout,townLayout;
     Spinner Townspin,Cityspin;
     Button signup, Emaill, Phone;
     CountryCodePicker Cpp;
@@ -59,17 +57,19 @@ public class Registration extends AppCompatActivity {
         mobileno = (TextInputLayout)findViewById(R.id.Mobilenumber);
         localaddress = (TextInputLayout)findViewById(R.id.Localaddress);
         pincode = (TextInputLayout)findViewById(R.id.Pincodee);
-        Cityspin = (Spinner) findViewById(R.id.Cityy);
-        Townspin = (Spinner) findViewById(R.id.Towns);
+       /* Cityspin = (Spinner) findViewById(R.id.Cityy);
+        Townspin = (Spinner) findViewById(R.id.Towns);*/
         area = (TextInputLayout)findViewById(R.id.Area);
+        cityLayout = (TextInputLayout)findViewById(R.id.cityLayout);
+        townLayout = (TextInputLayout)findViewById(R.id.townLayout);
 
         signup = (Button)findViewById(R.id.button);
         Emaill = (Button)findViewById(R.id.emaill);
         Phone = (Button)findViewById(R.id.phone);
 
-        Cpp = (CountryCodePicker)findViewById(R.id.CountryCode);
+       Cpp = (CountryCodePicker)findViewById(R.id.CountryCode);
 
-        Cityspin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+       /* Cityspin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
@@ -79,7 +79,7 @@ public class Registration extends AppCompatActivity {
                     ArrayList<String> list = new ArrayList<>();
                     list.addAll(Arrays.asList(Lefke));
                     ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(Registration.this,android.R.layout.simple_spinner_item,list);
-                    Cityspin.setAdapter(arrayAdapter);
+                    Townspin.setAdapter(arrayAdapter);
                 }
                 if(cityy.equals("Lefkosa")){
                     ArrayList<String> list = new ArrayList<>();
@@ -87,6 +87,7 @@ public class Registration extends AppCompatActivity {
                     ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(Registration.this,android.R.layout.simple_spinner_item,list);
                     Townspin.setAdapter(arrayAdapter);
                 }
+
 
             }
 
@@ -109,7 +110,7 @@ public class Registration extends AppCompatActivity {
 
             }
         });
-
+*/
         databaseReference = firebaseDatabase.getInstance().getReference("Customer");
         FAuth = FirebaseAuth.getInstance();
 
@@ -120,12 +121,18 @@ public class Registration extends AppCompatActivity {
                 fname = Fname.getEditText().getText().toString().trim();
                 lname = Lname.getEditText().getText().toString().trim();
                 emailid = Email.getEditText().getText().toString().trim();
-                mobile = mobileno.getEditText().getText().toString().trim();
+
+                mobile = Objects.requireNonNull(mobileno.getEditText()).getText().toString().trim();
+                String phonenumber = Cpp.getSelectedCountryCodeWithPlus() + mobile;
+                mobile = phonenumber;
                 password = Pass.getEditText().getText().toString().trim();
                 confpassword = cpass.getEditText().getText().toString().trim();
                 Area = area.getEditText().getText().toString().trim();
                 Localaddress = localaddress.getEditText().getText().toString().trim();
                 Pincode = pincode.getEditText().getText().toString().trim();
+                townn = townLayout.getEditText().getText().toString().trim();
+                cityy = cityLayout.getEditText().getText().toString().trim();
+
 
                 if (isValid()){
                     final ProgressDialog mDialog = new ProgressDialog(Registration.this);
@@ -180,11 +187,15 @@ public class Registration extends AppCompatActivity {
                                                                         public void onClick(DialogInterface dialog, int which) {
 
                                                                             dialog.dismiss();
+                                                                            Intent i = new Intent(Registration.this,MainMenu.class);
+                                                                            startActivity(i);
+                                                                            finish();
 
-                                                                            String phonenumber = Cpp.getSelectedCountryCodeWithPlus() + mobile;
-                                                                            Intent b = new Intent(Registration.this,VerifyPhone.class);
+                                                                           // String phonenumber = Cpp.getSelectedCountryCodeWithPlus() + mobile;
+                                                                           /* Intent b = new Intent(Registration.this,VerifyPhone.class);
                                                                             b.putExtra("phonenumber",phonenumber);
-                                                                            startActivity(b);
+                                                                            Log.e("phone",phonenumber.replaceAll("\\s+",""));
+                                                                            startActivity(b);*/
 
                                                                         }
                                                                     });
@@ -252,6 +263,13 @@ public class Registration extends AppCompatActivity {
         pincode.setErrorEnabled(false);
         pincode.setError("");
 
+        cityLayout.setErrorEnabled(false);
+        cityLayout.setError("");
+
+        townLayout.setErrorEnabled(false);
+        townLayout.setError("");
+
+
         boolean isValid=false,isValidlocaladd=false,isValidlname=false,isValidname=false,isValidemail=false,isValidpassword=false,isValidconfpassword=false,isValidmobilenum=false,isValidarea=false,isValidpincode=false;
         if(TextUtils.isEmpty(fname)){
             Fname.setErrorEnabled(true);
@@ -302,7 +320,7 @@ public class Registration extends AppCompatActivity {
             mobileno.setErrorEnabled(true);
             mobileno.setError("Mobile Number Is Required");
         }else{
-            if(mobile.length()<10){
+            if(mobile.length()<9 || mobile.length()>13){
                 mobileno.setErrorEnabled(true);
                 mobileno.setError("Invalid Mobile Number");
             }else{
@@ -324,6 +342,20 @@ public class Registration extends AppCompatActivity {
         if(TextUtils.isEmpty(Localaddress)){
             localaddress.setErrorEnabled(true);
             localaddress.setError("Fields Can't Be Empty");
+        }else{
+            isValidlocaladd = true;
+        }
+
+        if(TextUtils.isEmpty(cityy)){
+            cityLayout.setErrorEnabled(true);
+            cityLayout.setError("Please Enter City");
+        }else{
+            isValidlocaladd = true;
+        }
+
+        if(TextUtils.isEmpty(townn)){
+            townLayout.setErrorEnabled(true);
+            townLayout.setError("Please Enter Town");
         }else{
             isValidlocaladd = true;
         }
